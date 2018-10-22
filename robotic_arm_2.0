@@ -1,0 +1,58 @@
+#include<Servo.h>
+
+Servo S[4];
+int pot[4]={0,1,2,3};
+int potvalue[4]={0,0,0,0};
+int smoothvalue[4]={0,0,0,0};
+float a=0.6;
+int serv[4]={0,0,0,0};
+void setup() 
+{
+  S[0].attach(9);
+  S[1].attach(5);
+  S[2].attach(10);
+  S[3].attach(11);
+
+  for(int i=0;i<4;i++)
+      smoothvalue[i]=analogRead(pot[i]);    
+       
+ 
+  Serial.begin(9600);
+}
+
+void loop()
+{
+  
+    potvalue[0]=analogRead(pot[0]);
+    smoothvalue[0]=(a*potvalue[0])+((1-a)*smoothvalue[0]); 
+    serv[0]=map(smoothvalue[0],0,980,0,180);
+    S[0].write(serv[0]);
+    
+    delay(15); 
+
+    potvalue[1]=analogRead(pot[1]);
+    smoothvalue[1]=(a*potvalue[1])+((1-a)*smoothvalue[1]); 
+    serv[1]=map(smoothvalue[1],290,1000,0,180);
+    S[1].write(serv[1]);
+    delay(15);
+
+    potvalue[2]=analogRead(pot[2]);
+    smoothvalue[2]=(a*potvalue[2])+((1-a)*smoothvalue[2]); 
+    serv[2]=map(smoothvalue[2],0,989,0,180);
+    S[2].write(serv[2]);
+    delay(15);
+
+    potvalue[3]=analogRead(pot[3]);
+    smoothvalue[3]=(a*potvalue[3])+((1-a)*smoothvalue[3]); 
+    serv[3]=map(smoothvalue[3],0,989,0,180);
+    S[3].write(serv[3]);
+    delay(15);
+
+}
+    
+
+   
+
+    
+    
+   
